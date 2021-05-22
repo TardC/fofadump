@@ -1,5 +1,13 @@
 # Fofadump
 
+## Installation Instructions
+
+```shell
+go get -v github.com/tardc/fofadump/cmd/fofadump
+```
+
+## Usage
+
 ```
 Usage of fofadump:
   -email string
