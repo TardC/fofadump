@@ -29,7 +29,9 @@ type SearchResult struct {
 
 func (fc *FofaClient) DoWork(fofaQuery string, size int, fields string) {
 	fr := fc.FetchResult(fofaQuery, size, fields)
-	fc.FetchResultCallback(fr)
+	if fc.FetchResultCallback != nil {
+		fc.FetchResultCallback(fr)
+	}
 }
 
 func (fc *FofaClient) FetchResult(fofaQuery string, size int, fields string) *SearchResult {
