@@ -18,6 +18,8 @@ func main() {
 
 	var size int
 	flag.IntVar(&size, "size", 100, "The number size to query")
+	var page int
+	flag.IntVar(&page, "page", 1, "The number page to query")
 	var fofaQuery string
 	flag.StringVar(&fofaQuery, "q", "", "Fofa query rule")
 	var fields string
@@ -48,5 +50,5 @@ func main() {
 	}
 
 	fc := fofadump.NewFofaClient(cfg)
-	fc.DoWork(fofaQuery, size, fields)
+	fc.DoWork(fofaQuery, page, size, fields)
 }
