@@ -28,13 +28,13 @@ type SearchResult struct {
 }
 
 func (fc *FofaClient) DoWork(fofaQuery string, size int, fields string) {
-	fr := fc.FetchResult(fofaQuery, size, fields)
-	if fc.FetchResultCallback != nil {
+	fr, err := fc.FetchResult(fofaQuery, size, fields)
+	if err == nil && fc.FetchResultCallback != nil {
 		fc.FetchResultCallback(fr)
 	}
 }
 
-func (fc *FofaClient) FetchResult(fofaQuery string, size int, fields string) *SearchResult {
+func (fc *FofaClient) FetchResult(fofaQuery string, size int, fields string) (*SearchResult, error) {
 	b64Query := base64.StdEncoding.EncodeToString([]byte(fofaQuery))
 	searchApi := fmt.Sprintf("/api/v1/search/all?email=%s&key=%s&qbase64=%s&size=%d&fields=%s",
 		fc.Config.Email,
@@ -47,18 +47,21 @@ func (fc *FofaClient) FetchResult(fofaQuery string, size int, fields string) *Se
 	searchResult := &SearchResult{}
 	resp, err := http.Get(fc.Config.FofaServer + searchApi)
 	if err != nil {
-		log.Fatalln("Request fofa server failed:", err)
+		log.Println("Request fofa server failed:", err)
+		return nil, err
 	}
 	result, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalln("Read response body failed:", err)
+		log.Println("Read response body failed:", err)
+		return nil, err
 	}
 	//log.Println(string(result))
 	err = json.Unmarshal(result, searchResult)
 	if err != nil {
-		log.Fatalln("Unmarshal data failed:", err)
+		log.Println("Unmarshal data failed:", err)
+		return nil, err
 	}
-	return searchResult
+	return searchResult, nil
 }
 
 func (fc *FofaClient) SetFetchResultCallback(fn func(*SearchResult)) {
