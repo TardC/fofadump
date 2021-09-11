@@ -26,22 +26,23 @@ type SearchResult struct {
 	Size    int           `json:"size,omitempty"`
 }
 
-func (fc *FofaClient) DoWork(fofaQuery string, page, size int, fields string) {
-	fr, err := fc.FetchResult(fofaQuery, page, size, fields)
+func (fc *FofaClient) DoWork(fofaQuery string, page, size int, fields string, full bool) {
+	fr, err := fc.FetchResult(fofaQuery, page, size, fields, full)
 	if err == nil && fc.FetchResultCallback != nil {
 		fc.FetchResultCallback(fr)
 	}
 }
 
-func (fc *FofaClient) FetchResult(fofaQuery string, page, size int, fields string) (*SearchResult, error) {
+func (fc *FofaClient) FetchResult(fofaQuery string, page, size int, fields string, full bool) (*SearchResult, error) {
 	b64Query := base64.StdEncoding.EncodeToString([]byte(fofaQuery))
-	searchApi := fmt.Sprintf("/api/v1/search/all?email=%s&key=%s&qbase64=%s&page=%d&size=%d&fields=%s",
+	searchApi := fmt.Sprintf("/api/v1/search/all?email=%s&key=%s&qbase64=%s&page=%d&size=%d&fields=%s&full=%t",
 		fc.Config.Email,
 		fc.Config.Key,
 		b64Query,
 		page,
 		size,
 		fields,
+		full,
 	)
 
 	searchResult := &SearchResult{}

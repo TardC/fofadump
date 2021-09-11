@@ -22,6 +22,8 @@ func main() {
 	flag.StringVar(&fofaQuery, "q", "", "Fofa query rule")
 	var fields string
 	flag.StringVar(&fields, "fields", "host,ip,port", "Fields to query")
+	var full bool
+	flag.BoolVar(&full, "full", false, "Whether to search all data")
 
 	flag.Parse()
 
@@ -48,5 +50,5 @@ func main() {
 	}
 
 	fc := fofadump.NewFofaClient(cfg)
-	fc.DoWork(fofaQuery, page, size, fields)
+	fc.DoWork(fofaQuery, page, size, fields, full)
 }
