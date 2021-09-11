@@ -1,4 +1,4 @@
-package config
+package fofadump
 
 type Config struct {
 	FofaServer string

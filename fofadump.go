@@ -4,7 +4,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/tardc/fofadump/config"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -12,7 +11,7 @@ import (
 )
 
 type FofaClient struct {
-	Config              *config.Config
+	Config              *Config
 	FetchResultCallback FetchResultCallback
 }
 
@@ -69,7 +68,7 @@ func (fc *FofaClient) SetFetchResultCallback(fn func(*SearchResult)) {
 	fc.FetchResultCallback = fn
 }
 
-func NewFofaClient(cfg *config.Config) *FofaClient {
+func NewFofaClient(cfg *Config) *FofaClient {
 	fc := &FofaClient{}
 	fc.Config = cfg
 

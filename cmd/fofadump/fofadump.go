@@ -4,14 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"github.com/tardc/fofadump"
-	"github.com/tardc/fofadump/config"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
 func main() {
-	cfg := config.NewFofaConfig()
+	cfg := fofadump.NewFofaConfig()
 	flag.StringVar(&cfg.Email, "email", "", "Email of fofa account")
 	flag.StringVar(&cfg.Key, "key", "", "Key of fofa account")
 
