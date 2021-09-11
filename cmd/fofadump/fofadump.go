@@ -11,8 +11,7 @@ import (
 )
 
 func main() {
-	cfg := &config.Config{}
-	cfg.FofaServer = "https://fofa.so"
+	cfg := config.NewFofaConfig()
 	flag.StringVar(&cfg.Email, "email", "", "Email of fofa account")
 	flag.StringVar(&cfg.Key, "key", "", "Key of fofa account")
 
