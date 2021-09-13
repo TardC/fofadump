@@ -6,7 +6,6 @@ import (
 	"github.com/tardc/fofadump"
 	"io/ioutil"
 	"log"
-	"os"
 )
 
 func main() {
@@ -28,24 +27,20 @@ func main() {
 	flag.Parse()
 
 	if fofaQuery == "" {
-		log.Println("Please specify the fofa query rule")
-		os.Exit(1)
+		log.Fatalln("Please specify the fofa query rule")
 	}
 	// If not setting account, use default config in config file.
 	if cfg.Email == "" || cfg.Key == "" {
 		if defaultCfg, err := ioutil.ReadFile("config.json"); err == nil {
 			if err := json.Unmarshal(defaultCfg, cfg); err == nil {
 				if cfg.Email == "" || cfg.Key == "" {
-					log.Println("Please set email and key of fofa account")
-					os.Exit(1)
+					log.Fatalln("Please set email and key of fofa account")
 				}
 			} else {
-				log.Println("Set fofa account failed:", err)
-				os.Exit(1)
+				log.Fatalln("Set fofa account failed:", err)
 			}
 		} else {
-			log.Println("Read fofa config file failed:", err)
-			os.Exit(1)
+			log.Fatalln("Read fofa config file failed:", err)
 		}
 	}
 
