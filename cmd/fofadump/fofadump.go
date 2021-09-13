@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"github.com/tardc/fofadump"
 	"io/ioutil"
 	"log"
+
+	"github.com/tardc/fofadump"
 )
 
 func main() {
