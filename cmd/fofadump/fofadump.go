@@ -46,5 +46,7 @@ func main() {
 	}
 
 	fc := fofadump.NewFofaClient(cfg)
-	fc.DoWork(fofaQuery, page, size, fields, full)
+	if err := fc.DoWork(fofaQuery, page, size, fields, full); err != nil {
+		log.Fatalln(err)
+	}
 }

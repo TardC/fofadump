@@ -26,11 +26,12 @@ type SearchResult struct {
 	Size    int           `json:"size,omitempty"`
 }
 
-func (fc *FofaClient) DoWork(fofaQuery string, page, size int, fields string, full bool) {
+func (fc *FofaClient) DoWork(fofaQuery string, page, size int, fields string, full bool) error {
 	fr, err := fc.FetchResult(fofaQuery, page, size, fields, full)
 	if err == nil && fc.FetchResultCallback != nil {
 		fc.FetchResultCallback(fr)
 	}
+	return err
 }
 
 func (fc *FofaClient) FetchResult(fofaQuery string, page, size int, fields string, full bool) (*SearchResult, error) {
@@ -48,18 +49,15 @@ func (fc *FofaClient) FetchResult(fofaQuery string, page, size int, fields strin
 	searchResult := &SearchResult{}
 	resp, err := http.Get(fc.Config.FofaServer + searchApi)
 	if err != nil {
-		log.Println("Request fofa server failed:", err)
 		return nil, err
 	}
 	result, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Println("Read response body failed:", err)
 		return nil, err
 	}
-	//log.Println(string(result))
+
 	err = json.Unmarshal(result, searchResult)
 	if err != nil {
-		log.Println("Unmarshal data failed:", err)
 		return nil, err
 	}
 	return searchResult, nil
