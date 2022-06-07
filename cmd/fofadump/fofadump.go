@@ -13,6 +13,7 @@ func main() {
 	cfg := fofadump.NewFofaConfig()
 	flag.StringVar(&cfg.Email, "email", "", "Email of fofa account")
 	flag.StringVar(&cfg.Key, "key", "", "Key of fofa account")
+	flag.StringVar(&cfg.FofaServer, "fofa-url", "https://fofa.info", "URL of fofa server")
 
 	var size int
 	flag.IntVar(&size, "size", 100, "The number size to query")
@@ -21,7 +22,7 @@ func main() {
 	var fofaQuery string
 	flag.StringVar(&fofaQuery, "q", "", "Fofa query rule")
 	var fields string
-	flag.StringVar(&fields, "fields", "host,ip,port", "Fields to query")
+	flag.StringVar(&fields, "fields", "git st", "Fields to query")
 	var full bool
 	flag.BoolVar(&full, "full", false, "Whether to search all data")
 
