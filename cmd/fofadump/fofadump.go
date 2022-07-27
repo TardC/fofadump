@@ -22,7 +22,7 @@ func main() {
 	var fofaQuery string
 	flag.StringVar(&fofaQuery, "q", "", "Fofa query rule")
 	var fields string
-	flag.StringVar(&fields, "fields", "git st", "Fields to query")
+	flag.StringVar(&fields, "fields", "host,ip,port", "Fields to query")
 	var full bool
 	flag.BoolVar(&full, "full", false, "Whether to search all data")
 
